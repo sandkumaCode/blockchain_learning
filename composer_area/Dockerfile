@@ -40,8 +40,8 @@ RUN apt-get -y install build-essential libssl-dev
 # nodejs stuff
 RUN mkdir /usr/local/nvm
 ENV NVM_DIR /usr/local/nvm
-ENV NODE_PATH $NVM_DIR/$NODE_VERSION/lib/node_modules
-ENV PATH $NVM_DIR/versions/node/$NODE_VERSION/bin:$PATH
+#ENV NODE_PATH $NVM_DIR/$NODE_VERSION/lib/node_modules
+#ENV PATH $NVM_DIR/versions/node/$NODE_VERSION/bin:$PATH
 
 ENV NODE_VERSION 8
 RUN curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
@@ -50,7 +50,8 @@ RUN source $NVM_DIR/nvm.sh \
     && nvm alias default $NODE_VERSION \
     && nvm use default
 
-
+ENV NODE_PATH $NVM_DIR/$NODE_VERSION/lib/node_modules
+ENV PATH $NVM_DIR/versions/node/$NODE_VERSION/bin:$PATH
 
 #RUN export NVM_DIR="${HOME}/.nvm"
 #[ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh" \
@@ -63,7 +64,7 @@ RUN source $NVM_DIR/nvm.sh \
 RUN apt-get -y install apt-transport-https ca-certificates
 
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-RUN apt-get -y install unzip
+#RUN apt-get -y install unzip
 
 RUN npm install -g composer-cli@0.19
 RUN npm install -g composer-rest-server@0.19
