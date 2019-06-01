@@ -54,23 +54,23 @@ RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 #RUN apt-get -y install unzip
 
 
-RUN npm install -g composer-cli@0.19
-RUN npm install -g composer-rest-server@0.19
-RUN npm install -g generator-hyperledger-composer@0.19
-RUN npm install -g yo
-RUN npm install -g composer-playground@0.19
+#RUN npm install -g composer-cli@0.19
+#RUN npm install -g composer-rest-server@0.19
+#RUN npm install -g generator-hyperledger-composer@0.19
+#RUN npm install -g yo
+#RUN npm install -g composer-playground@0.19
 
 
-RUN mkdir fabric-dev-servers_install && cd fabric-dev-servers_install
+#RUN mkdir fabric-dev-servers_install && cd fabric-dev-servers_install
 
-RUN curl -O https://raw.githubusercontent.com/hyperledger/composer-tools/master/packages/fabric-dev-servers/fabric-dev-servers.tar.gz
-RUN tar -xvf fabric-dev-servers.tar.gz
+#RUN curl -O https://raw.githubusercontent.com/hyperledger/composer-tools/master/packages/fabric-dev-servers/fabric-dev-servers.tar.gz
+#RUN tar -xvf fabric-dev-servers.tar.gz
 
-RUN cd fabric-dev-servers
-ENV export FABRIC_VERSION=hlfv11
-RUN ./downloadFabric.sh
+#RUN cd fabric-dev-servers
+#ENV export FABRIC_VERSION=hlfv11
+#RUN ./downloadFabric.sh
 
-WORKDIR /fabric-dev-servers_install
+#WORKDIR /fabric-dev-servers_install
 
 #CMD /fabric-dev-servers_install/startFabric.sh
 CMD tail -f /dev/null
