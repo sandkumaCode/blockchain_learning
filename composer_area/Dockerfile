@@ -13,7 +13,7 @@ RUN apt-get update
 RUN apt-get install -qq wget unzip build-essential cmake gcc libcunit1-dev libudev-dev
 
 RUN apt-get update && \
-        apt-get install -y software-properties-common vim
+        apt-get install -y software-properties-common vim \
         add-apt-repository ppa:jonathonf/python-3.6
 RUN apt-get update -y
 
