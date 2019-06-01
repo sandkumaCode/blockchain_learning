@@ -40,6 +40,7 @@ RUN apt-get -y install build-essential libssl-dev
 # nodejs stuff
 RUN mkdir /usr/local/nvm
 ENV NVM_DIR /usr/local/nvm
+ENV NPM_PATH /root/.nvm/versions/node/v8.16.0/bin/npm
 #ENV NODE_PATH $NVM_DIR/$NODE_VERSION/lib/node_modules
 #ENV PATH $NVM_DIR/versions/node/$NODE_VERSION/bin:$PATH
 
@@ -52,6 +53,7 @@ RUN source $NVM_DIR/nvm.sh \
 
 ENV NODE_PATH $NVM_DIR/$NODE_VERSION/lib/node_modules
 ENV PATH $NVM_DIR/versions/node/$NODE_VERSION/bin:$PATH
+ENV PATH $PATH:$NPM_PATH
 
 #RUN export NVM_DIR="${HOME}/.nvm"
 #[ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh" \
