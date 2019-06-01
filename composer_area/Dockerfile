@@ -35,15 +35,8 @@ RUN apt-get update
 RUN apt-get install -y git
 
 RUN apt-get -y install build-essential libssl-dev
-#RUN curl -sL https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh -o install_nvm.sh
-#RUN ./install_nvm.sh
 # nodejs stuff
-#RUN mkdir /usr/local/nvm
-#ENV NVM_DIR /usr/local/nvm
 ENV PATH $PATH:/root/.nvm/versions/node/v8.16.0/bin
-#ENV NODE_PATH $NVM_DIR/$NODE_VERSION/lib/node_modules
-#ENV PATH $NVM_DIR/versions/node/$NODE_VERSION/bin:$PATH
-#ENV NVM_DIR="${HOME}/.nvm"
 ENV NVM_DIR=/root/.nvm
 
 ENV NODE_VERSION 8
@@ -53,17 +46,7 @@ RUN source $NVM_DIR/nvm.sh \
     && nvm use 8
 
 
-#ENV NODE_PATH $NVM_DIR/$NODE_VERSION/lib/node_modules
-#ENV PATH $NVM_DIR/versions/node/$NODE_VERSION/bin:$PATH
-#ENV PATH $PATH:$NPM_PATH
 
-#RUN export NVM_DIR="${HOME}/.nvm"
-#[ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh" \
-#[ -s "${NVM_DIR}/bash_completion" ] && . "${NVM_DIR}/bash_completion"
-
-#RUN nvm install 8
-#RUN nvm use 8
-#RUN apt-get install -y nodejs npm
 
 RUN apt-get -y install apt-transport-https ca-certificates
 
