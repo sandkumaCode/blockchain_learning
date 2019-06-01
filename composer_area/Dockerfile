@@ -39,9 +39,9 @@ RUN export NVM_DIR="${HOME}/.nvm"
 #[ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh" \
 #[ -s "${NVM_DIR}/bash_completion" ] && . "${NVM_DIR}/bash_completion"
 
-#RUN nvm install 8
-#RUN nvm use 8
-RUN apt-get install -y nodejs npm
+RUN nvm install 8
+RUN nvm use 8
+#RUN apt-get install -y nodejs npm
 
 RUN apt-get -y install apt-transport-https ca-certificates
 
