@@ -14,7 +14,9 @@ RUN apt-get install -qq wget unzip build-essential cmake gcc libcunit1-dev libud
 
 RUN apt-get update && \
         apt-get install -y software-properties-common vim \
-        add-apt-repository ppa:jonathonf/python-3.6
+        add-apt-repository ppa:deadsnakes/ppa
+        #add-apt-repository ppa:jonathonf/python-3.6
+
 RUN apt-get update -y
 
 RUN apt-get install -y build-essential python3.6 python3.6-dev python3-pip python3.6-venv && \
@@ -26,7 +28,7 @@ RUN python3.6 -m pip install pip --upgrade && \
 
 
 
-RUN add-apt-repository -y ppa:git-core/ppa
+#RUN add-apt-repository -y ppa:git-core/ppa
 RUN apt-get update
 RUN apt-get install -y git
 
@@ -39,6 +41,7 @@ RUN export NVM_DIR="${HOME}/.nvm" \
 
 RUN nvm install 8
 RUN nvm use 8
+RUN apt-get install nodejs
 
 RUN apt-get -y install apt-transport-https ca-certificates
 
