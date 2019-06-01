@@ -38,11 +38,12 @@ RUN apt-get -y install build-essential libssl-dev
 #RUN curl -sL https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh -o install_nvm.sh
 #RUN ./install_nvm.sh
 # nodejs stuff
-RUN mkdir /usr/local/nvm
-ENV NVM_DIR /usr/local/nvm
-ENV NPM_PATH /root/.nvm/versions/node/v8.16.0/bin/npm
+#RUN mkdir /usr/local/nvm
+#ENV NVM_DIR /usr/local/nvm
+#ENV NPM_PATH /root/.nvm/versions/node/v8.16.0/bin/npm
 #ENV NODE_PATH $NVM_DIR/$NODE_VERSION/lib/node_modules
 #ENV PATH $NVM_DIR/versions/node/$NODE_VERSION/bin:$PATH
+ENV NVM_DIR="${HOME}/.nvm"
 
 ENV NODE_VERSION 8
 RUN curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
@@ -51,9 +52,9 @@ RUN source $NVM_DIR/nvm.sh \
     && nvm alias default $NODE_VERSION \
     && nvm use default
 
-ENV NODE_PATH $NVM_DIR/$NODE_VERSION/lib/node_modules
-ENV PATH $NVM_DIR/versions/node/$NODE_VERSION/bin:$PATH
-ENV PATH $PATH:$NPM_PATH
+#ENV NODE_PATH $NVM_DIR/$NODE_VERSION/lib/node_modules
+#ENV PATH $NVM_DIR/versions/node/$NODE_VERSION/bin:$PATH
+#ENV PATH $PATH:$NPM_PATH
 
 #RUN export NVM_DIR="${HOME}/.nvm"
 #[ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh" \
