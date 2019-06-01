@@ -26,7 +26,7 @@ RUN python3.6 -m pip install pip --upgrade && \
 
 
 
-apt-add-repository -y ppa:git-core/ppa
+add-apt-repository -y ppa:git-core/ppa
 apt-get update
 apt-get install -y git
 
