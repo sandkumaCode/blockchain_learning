@@ -13,7 +13,7 @@ RUN apt-get update
 RUN apt-get install -qq wget unzip build-essential cmake gcc libcunit1-dev libudev-dev
 
 RUN apt-get update && \
-        apt-get install -y software-properties-common vim
+        apt-get install -y software-properties-common vim curl
         #add-apt-repository ppa:deadsnakes/ppa
         #add-apt-repository ppa:jonathonf/python-3.6
 
@@ -35,12 +35,12 @@ RUN apt-get install -y git
 RUN apt-get -y install build-essential libssl-dev
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
 
-RUN export NVM_DIR="${HOME}/.nvm" \
-[ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh" \
-[ -s "${NVM_DIR}/bash_completion" ] && . "${NVM_DIR}/bash_completion"
+RUN export NVM_DIR="${HOME}/.nvm"
+#[ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh" \
+#[ -s "${NVM_DIR}/bash_completion" ] && . "${NVM_DIR}/bash_completion"
 
-RUN nvm install 8
-RUN nvm use 8
+#RUN nvm install 8
+#RUN nvm use 8
 RUN apt-get install nodejs
 
 RUN apt-get -y install apt-transport-https ca-certificates
