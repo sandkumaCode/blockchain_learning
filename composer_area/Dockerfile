@@ -26,11 +26,11 @@ RUN python3.6 -m pip install pip --upgrade && \
 
 
 
-sudo apt-add-repository -y ppa:git-core/ppa
-sudo apt-get update
-sudo apt-get install -y git
+apt-add-repository -y ppa:git-core/ppa
+apt-get update
+apt-get install -y git
 
-sudo apt-get -y install build-essential libssl-dev
+apt-get -y install build-essential libssl-dev
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
 
 export NVM_DIR="${HOME}/.nvm"
@@ -40,10 +40,10 @@ export NVM_DIR="${HOME}/.nvm"
 nvm install 8
 nvm use 8
 
-sudo apt-get -y install apt-transport-https ca-certificates
+apt-get -y install apt-transport-https ca-certificates
 
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo apt-get -y install unzip
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+apt-get -y install unzip
 
 npm install -g composer-cli@0.19
 npm install -g composer-rest-server@0.19
