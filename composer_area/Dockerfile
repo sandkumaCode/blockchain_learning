@@ -13,18 +13,18 @@ RUN apt-get update
 RUN apt-get install -qq wget unzip build-essential cmake gcc libcunit1-dev libudev-dev
 
 RUN apt-get update && \
-        apt-get install -y software-properties-common vim \
-        add-apt-repository ppa:deadsnakes/ppa
+        apt-get install -y software-properties-common vim
+        #add-apt-repository ppa:deadsnakes/ppa
         #add-apt-repository ppa:jonathonf/python-3.6
 
 RUN apt-get update -y
 
-RUN apt-get install -y build-essential python3.6 python3.6-dev python3-pip python3.6-venv && \
+RUN apt-get install -y build-essential  python3-pip  && \
         apt-get install -y git
 
 # update pip
-RUN python3.6 -m pip install pip --upgrade && \
-        python3.6 -m pip install wheel
+RUN python3 -m pip install pip --upgrade && \
+        python3 -m pip install wheel
 
 
 
