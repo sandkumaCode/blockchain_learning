@@ -26,40 +26,40 @@ RUN python3.6 -m pip install pip --upgrade && \
 
 
 
-add-apt-repository -y ppa:git-core/ppa
-apt-get update
-apt-get install -y git
+RUN add-apt-repository -y ppa:git-core/ppa
+RUN apt-get update
+RUN apt-get install -y git
 
-apt-get -y install build-essential libssl-dev
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
+RUN apt-get -y install build-essential libssl-dev
+RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
 
-export NVM_DIR="${HOME}/.nvm"
-[ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh"
+RUN export NVM_DIR="${HOME}/.nvm" \
+[ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh" \
 [ -s "${NVM_DIR}/bash_completion" ] && . "${NVM_DIR}/bash_completion"
 
-nvm install 8
-nvm use 8
+RUN nvm install 8
+RUN nvm use 8
 
-apt-get -y install apt-transport-https ca-certificates
+RUN apt-get -y install apt-transport-https ca-certificates
 
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-apt-get -y install unzip
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+RUN apt-get -y install unzip
 
-npm install -g composer-cli@0.19
-npm install -g composer-rest-server@0.19
-npm install -g generator-hyperledger-composer@0.19
-npm install -g yo
-npm install -g composer-playground@0.19
+RUN npm install -g composer-cli@0.19
+RUN npm install -g composer-rest-server@0.19
+RUN npm install -g generator-hyperledger-composer@0.19
+RUN npm install -g yo
+RUN npm install -g composer-playground@0.19
 
 
-mkdir fabric-dev-servers_install && cd fabric-dev-servers_install
+RUN mkdir fabric-dev-servers_install && cd fabric-dev-servers_install
 
-curl -O https://raw.githubusercontent.com/hyperledger/composer-tools/master/packages/fabric-dev-servers/fabric-dev-servers.tar.gz
-tar -xvf fabric-dev-servers.tar.gz
+RUN curl -O https://raw.githubusercontent.com/hyperledger/composer-tools/master/packages/fabric-dev-servers/fabric-dev-servers.tar.gz
+RUN tar -xvf fabric-dev-servers.tar.gz
 
-cd fabric-dev-servers
-export FABRIC_VERSION=hlfv11
-./downloadFabric.sh
+RUN cd fabric-dev-servers
+ENV export FABRIC_VERSION=hlfv11
+RUN ./downloadFabric.sh
 
 WORKDIR /fabric-dev-servers_install
 
