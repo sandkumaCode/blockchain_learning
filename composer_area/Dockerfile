@@ -48,9 +48,10 @@ ENV NVM_DIR="${HOME}/.nvm"
 ENV NODE_VERSION 8
 RUN curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
 RUN source $NVM_DIR/nvm.sh \
-    && nvm install $NODE_VERSION \
-    && nvm alias default $NODE_VERSION \
-    && nvm use default
+    && nvm install 8 \
+    && nvm on \
+    && nvm use 8
+
 
 #ENV NODE_PATH $NVM_DIR/$NODE_VERSION/lib/node_modules
 #ENV PATH $NVM_DIR/versions/node/$NODE_VERSION/bin:$PATH
