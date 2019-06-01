@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
-DOCKER_IMAGE = bl/compose
+TAG=":1"
+DOCKER_IMAGE = "github.com/docker-library/compose"${TAG}
 docker build -t $(DOCKER_IMAGE) .
