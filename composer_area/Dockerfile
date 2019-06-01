@@ -40,16 +40,16 @@ RUN apt-get -y install build-essential libssl-dev
 # nodejs stuff
 #RUN mkdir /usr/local/nvm
 #ENV NVM_DIR /usr/local/nvm
-#ENV NPM_PATH /root/.nvm/versions/node/v8.16.0/bin/npm
+ENV PATH $PATH:/root/.nvm/versions/node/v8.16.0/bin
 #ENV NODE_PATH $NVM_DIR/$NODE_VERSION/lib/node_modules
 #ENV PATH $NVM_DIR/versions/node/$NODE_VERSION/bin:$PATH
-ENV NVM_DIR="${HOME}/.nvm"
+#ENV NVM_DIR="${HOME}/.nvm"
+ENV NVM_DIR=/root/.nvm
 
 ENV NODE_VERSION 8
 RUN curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
 RUN source $NVM_DIR/nvm.sh \
     && nvm install 8 \
-    && nvm on \
     && nvm use 8
 
 
@@ -70,6 +70,7 @@ RUN apt-get -y install apt-transport-https ca-certificates
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 #RUN apt-get -y install unzip
 
+
 RUN npm install -g composer-cli@0.19
 RUN npm install -g composer-rest-server@0.19
 RUN npm install -g generator-hyperledger-composer@0.19
@@ -88,4 +89,5 @@ RUN ./downloadFabric.sh
 
 WORKDIR /fabric-dev-servers_install
 
-CMD /fabric-dev-servers_install/startFabric.sh
+#CMD /fabric-dev-servers_install/startFabric.sh
+CMD tail -f /dev/null
