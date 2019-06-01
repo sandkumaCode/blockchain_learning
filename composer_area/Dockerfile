@@ -41,7 +41,7 @@ RUN export NVM_DIR="${HOME}/.nvm"
 
 #RUN nvm install 8
 #RUN nvm use 8
-RUN apt-get install nodejs
+RUN apt-get install -y nodejs
 
 RUN apt-get -y install apt-transport-https ca-certificates
 
