@@ -2,6 +2,8 @@ FROM ubuntu:16.04
 RUN apt-get update
 RUN apt-get install locales
 
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+
 # Set the locale
 RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
@@ -38,6 +40,9 @@ RUN apt-get -y install build-essential libssl-dev
 # nodejs stuff
 RUN mkdir /usr/local/nvm
 ENV NVM_DIR /usr/local/nvm
+ENV NODE_PATH $NVM_DIR/$NODE_VERSION/lib/node_modules
+ENV PATH $NVM_DIR/versions/node/$NODE_VERSION/bin:$PATH
+
 ENV NODE_VERSION 8
 RUN curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
 RUN source $NVM_DIR/nvm.sh \
@@ -45,15 +50,14 @@ RUN source $NVM_DIR/nvm.sh \
     && nvm alias default $NODE_VERSION \
     && nvm use default
 
-ENV NODE_PATH $NVM_DIR/$NODE_VERSION/lib/node_modules
-ENV PATH $NVM_DIR/versions/node/$NODE_VERSION/bin:$PATH
+
 
 #RUN export NVM_DIR="${HOME}/.nvm"
 #[ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh" \
 #[ -s "${NVM_DIR}/bash_completion" ] && . "${NVM_DIR}/bash_completion"
 
-RUN nvm install 8
-RUN nvm use 8
+#RUN nvm install 8
+#RUN nvm use 8
 #RUN apt-get install -y nodejs npm
 
 RUN apt-get -y install apt-transport-https ca-certificates
