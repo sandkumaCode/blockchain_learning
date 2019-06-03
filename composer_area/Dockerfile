@@ -8,9 +8,10 @@ RUN deluser --remove-home node && \
     apk add --no-cache make gcc g++ python git libc6-compat && \
     su -c "npm config set prefix '/home/composer/.npm-global'" - composer && \
     su -c "npm install --production -g pm2 composer-playground@${VERSION} composer-wallet-redis composer-wallet-cloudant composer-wallet-ibmcos" - composer && \
-    su -c "npm cache clean --force" - composer && \
-    rm -rf /home/composer/.config /home/composer/.node-gyp /home/composer/.npm && \
-    apk del make gcc g++ python git
+    su -c "npm cache clean --force" - composer
+#    && \
+#    rm -rf /home/composer/.config /home/composer/.node-gyp /home/composer/.npm && \
+#    apk del make gcc g++ python git
 
 USER composer
 
@@ -23,11 +24,15 @@ ENV PATH /home/composer/.npm-global/bin:$PATH
 # Run in the composer users home directory.
 WORKDIR /home/composer
 
-#RUN npm install -g composer-cli@0.19
-#RUN npm install -g composer-rest-server@0.19
-#RUN npm install -g generator-hyperledger-composer@0.19
-#RUN npm install -g yo
-#RUN npm install -g composer-playground@0.19
+RUN npm install -g composer-cli
+#@0.19
+RUN npm install -g composer-rest-server
+#@0.19
+RUN npm install -g generator-hyperledger-composer
+#@0.19
+RUN npm install -g yo
+RUN npm install -g composer-playground
+#@0.19
 
 #COPY . .
 
