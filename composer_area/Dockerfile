@@ -23,11 +23,11 @@ ENV PATH /home/composer/.npm-global/bin:$PATH
 # Run in the composer users home directory.
 WORKDIR /home/composer
 
-RUN npm install -g composer-cli@0.19
-RUN npm install -g composer-rest-server@0.19
-RUN npm install -g generator-hyperledger-composer@0.19
-RUN npm install -g yo
-RUN npm install -g composer-playground@0.19
+#RUN npm install -g composer-cli@0.19
+#RUN npm install -g composer-rest-server@0.19
+#RUN npm install -g generator-hyperledger-composer@0.19
+#RUN npm install -g yo
+#RUN npm install -g composer-playground@0.19
 
 #COPY . .
 
