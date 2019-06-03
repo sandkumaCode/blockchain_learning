@@ -1,12 +1,13 @@
 FROM node:8
 ENV NPM_CONFIG_LOGLEVEL warn
 ARG VERSION=latest
+
 RUN apt-get install -y make gcc g++ python git  && \
     su -c "npm config set prefix '/home/composer/.npm-global'" - composer && \
     su -c "npm install --production -g pm2 composer-playground@${VERSION} composer-wallet-redis composer-wallet-cloudant composer-wallet-ibmcos" - composer && \
-    su -c "npm cache clean --force" - composer
+    su -c "npm cache clean --force"
 
-USER composer
+#USER composer
 
 ENV PATH /home/composer/.npm-global/bin:$PATH
 
