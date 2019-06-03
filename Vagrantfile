@@ -9,7 +9,21 @@ Vagrant.configure("2") do |config|
     system "vagrant plugin install #{plugin}" unless Vagrant.has_plugin? plugin
   end
 
+  required_plugins = %w( vagrant-vbguest vagrant-disksize )
+    _retry = false
+    required_plugins.each do |plugin|
+        unless Vagrant.has_plugin? plugin
+            system "vagrant plugin install #{plugin}"
+            _retry=true
+        end
+    end
+
+    if (_retry)
+        exec "vagrant " + ARGV.join(' ')
+    end
+
   config.vm.box = "ubuntu/xenial64"
+  config.disksize.size = "20GB"
 
   config.vm.synced_folder ".", "/vagrant", fsnotify: true
   
