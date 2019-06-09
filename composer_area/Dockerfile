@@ -41,4 +41,9 @@ COPY fabric-dev-servers_install/* ./fabric-dev-servers_install/
 
 #WORKDIR /fabric-dev-servers_install
 
-CMD tail -f /dev/null
+# use this if we want to debug the container from cmd line
+# in case we want to run following lines would be good
+#CMD tail -f /dev/null
+EXPOSE 8080
+
+CMD [ "pm2-docker", "composer-playground" ]
