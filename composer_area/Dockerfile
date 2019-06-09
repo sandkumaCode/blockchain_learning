@@ -13,7 +13,7 @@ RUN deluser --remove-home node && \
 #    rm -rf /home/composer/.config /home/composer/.node-gyp /home/composer/.npm && \
 #    apk del make gcc g++ python git
 
-USER composer
+RUN apk update && apk add bash
 
 # Run as the composer user ID.
 USER composer
