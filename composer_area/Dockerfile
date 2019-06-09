@@ -35,6 +35,9 @@ RUN npm install -g composer-playground
 #@0.19
 
 #COPY . .
+RUN mkdir fabric-dev-servers_install && cd fabric-dev-servers_install
+COPY fabric-dev-servers_install/* .
+
 
 #WORKDIR /fabric-dev-servers_install
 
