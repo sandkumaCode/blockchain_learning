@@ -53,7 +53,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   #HOSTREPO_DEBS.each { |deb|
   #  config.vm.provision "shell", privileged: false,
-  #      inline: "if [ ! -e #{deb} ]; then wget https://github.cyanoptics.com/raw/bp2/hostrepo/master/extern/#{deb}; fi"
+  #      inline: "if [ ! -e #{deb} ]; then  fi"
   #}
 
   #HOSTREPO_DEBS.each { |deb|
