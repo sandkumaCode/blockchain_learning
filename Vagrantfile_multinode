@@ -1,0 +1,145 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.require_version " > 1.5"
+
+# Note if you run more than one site, you must have a unique site_instance
+# for each site (each vbox host must have a unique ip address for it private
+# network interface)
+$site_instance = 0
+$num_hosts = 1
+$instance_name_prefix = "host-"
+
+$host_bridge_interface = 'eth1'
+#$host_bridge_interface = 'enp3s0'
+#$host_bridge_interface = 'en3: Thunderbolt Eithernet'
+
+$registry = "dockerreg.cyanoptics.com"
+$registry_user = "superuser"
+$registry_password = "superuser"
+
+HOSTREPO_DEBS = [
+    "openvswitch-common_2.4.0-0ubuntu4_amd64.deb",
+    "openvswitch-switch_2.4.0-0ubuntu4_amd64.deb",
+    "bridge-utils_1.5-6ubuntu2_amd64.deb",
+]
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  # Every Vagrant virtual environment requires a box to build off of.
+  config.vm.box = "ubuntu-16.04-virtualbox-17.02-0.3.0-2.2.0.701b072.box"
+  #config.vm.box_url = "ubuntu/xenial64"
+
+  config.ssh.insert_key = false
+
+  # Allocate more ram if required for your apps
+  # Default memory allocation is 2Gb (2048)
+  config.vm.provider :virtualbox do |vb|
+     vb.customize ["modifyvm", :id, "--memory", "4096"]
+     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+     vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+     vb.customize ["modifyvm", :id, "--nictype1", "virtio"]
+     # If you want to allocate more than one cpu to your VM
+     # uncomment the following line
+     vb.customize ["modifyvm", :id, "--cpus", "2"]
+  end
+
+
+  #HOSTREPO_DEBS.each { |deb|
+  #  config.vm.provision "shell", privileged: false,
+  #      inline: "if [ ! -e #{deb} ]; then wget https://github.cyanoptics.com/raw/bp2/hostrepo/master/extern/#{deb}; fi"
+  #}
+
+  #HOSTREPO_DEBS.each { |deb|
+  #  config.vm.provision "shell",
+  #      inline: "dpkg -i #{deb}"
+  #}
+
+    config.vm.provision "shell", privileged: true,
+        inline: "apt-get update"
+    config.vm.provision "shell", privileged: true,
+        inline: "apt-get install -y python-pip git vim aptitude"
+    config.vm.provision "shell", privileged: true,
+        inline: "pip install virtualenv"
+
+    config.vm.provision "shell", privileged: false,
+        inline: "sudo mkdir -p /etc/bp2"
+    config.vm.provision "shell", privileged: false,
+        inline: "sudo chown -R vagrant:vagrant /etc/bp2"
+
+    config.vm.provision "file", source: "~/.vagrant.d/insecure_private_key", destination: "~/.ssh/id_rsa"
+
+
+  (1..$num_hosts).each do |i|
+      config.vm.define vm_name = "%s%d" % [$instance_name_prefix, i-1] do |config|
+      config.vm.hostname = vm_name
+
+      #config.vm.network :public_network#, adapter: 4, :bridge=>'eth1'
+      config.vm.network :public_network, :bridge=>$host_bridge_interface
+      ip = "192.168.#{42+$site_instance}.#{i+1}"
+      config.vm.network :private_network, ip: ip
+
+
+      # TODO we need to fix this
+      (1..$num_hosts).each do |j|
+        config.vm.provision "shell", privileged: false,
+            inline: "We need to fix this"
+      end
+
+      # nuke this file to ensure different docker engine IDs / otherwise there is a chance
+      # we get dup IDs and swarm fails
+      config.vm.provision "shell",
+          inline: "rm /etc/docker/key.json"
+
+
+      config.vm.provision "shell", privileged: true,
+          inline: "mkdir -p /root/.ssh"
+      config.vm.provision "shell", privileged: true,
+          inline: "cp -a /home/vagrant/.ssh/* /root/.ssh/."
+      config.vm.provision "shell", privileged: true,
+          inline: "chown -R root:root /root/.ssh"
+    end
+  end
+
+
+
+
+
+  # Create Host Only network, this is required for NFS mounts to work
+  # config.vm.network :private_network, ip: "192.168.33.10"
+
+  # Share an additional folder to the guest VM. The first argument is
+  # the path on the host to the actual folder. The second argument is
+  # the path on the guest to mount the folder. And the optional third
+  # argument is a set of non-required options.
+  # config.vm.synced_folder "../data", "/vagrant_data"
+  # config.vm.synced_folder ".", "/home/vagrant/Depot", type: "nfs"
+
+  # If true, then any SSH connections made will enable agent forwarding.
+  # Default value: false
+  # config.ssh.forward_agent = true
+
+  # Enable remote access
+  # You have to modify hostname if you want to open this machine for remote access
+  # To allow remote access to the vagrant box you need to create additinal interface
+  # for bridging, and connect it to eth0 on your host
+  #
+  # config.vm.hostname = <<<< MODIFY THIS NAME >>>>
+  # config.vm.provider :virtualbox do |vb|
+  #   vb.customize ["modifyvm", :id, "--nic4",  "bridged"]
+  # end
+  # config.vm.network :public_network, adapter: 4, :bridge=>'eth0'
+
+  # If you want to share your MAC wireless adapter replace the previous line with
+  # config.vm.network :public_network, adapter: 4, :bridge => 'en1: Wi-Fi (AirPort)'
+
+  # If you want to be able to choose which adapter to use every time vagrant box
+  # starts replace network configuration line with
+  # config.vm.network :public_network, adapter: 4
+end
